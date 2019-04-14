@@ -7,16 +7,7 @@ import TodoList from './Components/TodoList';
 
 class App extends Component {
   state = {
-    items: [
-      {
-        id: 1,
-        title: 'make perjexxx'
-      },
-      {
-        id: 1,
-        title: 'move it'
-      }
-    ],
+    items: [],
     id: uuid(),
     item: '',
     editItem: false
@@ -35,19 +26,23 @@ class App extends Component {
 
     const updatedItems = [...this.state.items, newTodo];
 
-    this.setState({
-      items: updatedItems,
-      item: '',
-      id: uuid(),
-      editItem: false
-    }, () => console.log(this.state));
+    this.setState(
+      {
+        items: updatedItems,
+        item: '',
+        id: uuid(),
+        editItem: false
+      },
+      () => console.log(this.state)
+    );
   };
 
-  clearList = (e) => {
-    console.log('clear list');
+  clearList = () => {
+    this.setState({ items: [] });
   };
   handleDelete = (id) => {
-    console.log(`handle delete on ${id}`);
+    const filteredItems = this.state.items.filter((item) => item.id !== id);
+    this.setState({ items: filteredItems });
   };
   handleEdit = (id) => {
     console.log(`handle edit on ${id}`);

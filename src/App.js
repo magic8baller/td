@@ -23,10 +23,24 @@ class App extends Component {
   };
 
   handleChange = (e) => {
-    console.log('handle change');
+    this.setState({ item: e.target.value });
   };
   handleSubmit = (e) => {
-    console.log('handle submit');
+    const { item: title, id, items } = this.state;
+    e.preventDefault();
+    const newTodo = {
+      id,
+      title
+    };
+
+    const updatedItems = [...this.state.items, newTodo];
+
+    this.setState({
+      items: updatedItems,
+      item: '',
+      id: uuid(),
+      editItem: false
+    }, () => console.log(this.state));
   };
 
   clearList = (e) => {
@@ -40,7 +54,7 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div className="App">
         <div className="container">
@@ -50,10 +64,15 @@ class App extends Component {
               <TodoInput
                 item={this.state.item}
                 handleChange={this.handleChange}
-                handleSubmit={this.handleSubmit} editItem={this.state.handleEdit}
+                handleSubmit={this.handleSubmit}
+                editItem={this.state.handleEdit}
               />
 
-              <TodoList items={this.state.items} clearList={this.clearList} handleDelete={this.handleDelete}/>
+              <TodoList
+                items={this.state.items}
+                clearList={this.clearList}
+                handleDelete={this.handleDelete}
+              />
             </div>
           </div>
         </div>
